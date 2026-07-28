@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import { useState, useEffect } from 'react';
 
 function Home() {
@@ -76,58 +77,67 @@ const content = {
   const langKey = language && language.startsWith('pt') ? 'pt' : 'en';
 
   return (
-    <div className="page">
-      <main className="card">
-        <div className="card-header">
-          <p className="eyebrow">{content[langKey].eyebrow}</p>
-          <button
-            type="button"
-            className="language-toggle"
-            onClick={toggleLanguage}
-            aria-label="Toggle language"
-            title="Toggle language"
-          >
-            {language === 'en-US' ? 'EN' : 'PT'}
-          </button>
-        </div>
-        <section className="hero">
-          <div className="hero-content">
-            <h1>{content[langKey].title}</h1>
-            <p className="lead">
-              {content[langKey].lead}
-            </p>
+    <>
+      <Head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="apple-touch-icon" href="/favicon.png" />
+        <meta name="theme-color" content="#07111f" />
+      </Head>
 
-            <div className="actions">
-              <a href="https://www.linkedin.com/in/felipe-puziol-de-aquino/" target="_blank" rel="noreferrer">
-                {content[langKey].button}
-              </a>
+      <div className="page">
+        <main className="card">
+          <div className="card-header">
+            <p className="eyebrow">{content[langKey].eyebrow}</p>
+            <button
+              type="button"
+              className="language-toggle"
+              onClick={toggleLanguage}
+              aria-label="Toggle language"
+              title="Toggle language"
+            >
+              {language === 'en-US' ? 'EN' : 'PT'}
+            </button>
+          </div>
+
+          <section className="hero">
+            <div className="hero-content">
+              <h1>{content[langKey].title}</h1>
+              <p className="lead">{content[langKey].lead}</p>
+
+              <div className="actions">
+                <a
+                  href="https://www.linkedin.com/in/felipe-puziol-de-aquino/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {content[langKey].button}
+                </a>
+              </div>
             </div>
-          </div>
 
-          <div className="photo-rect" role="img" aria-label="Photo">
-            <img src="/eu.jpg" alt="Profile" className="profile-photo desktop-photo" />
-            <img src="/eu_h.jpg" alt="Profile" className="profile-photo mobile-photo" />
-          </div>
-        </section>
+            <div className="photo-rect" role="img" aria-label="Photo">
+              <img src="/eu.jpg" alt="Profile" className="profile-photo desktop-photo" />
+              <img src="/eu_h.jpg" alt="Profile" className="profile-photo mobile-photo" />
+            </div>
+          </section>
 
-        <section className="content-grid">
-          <article>
-            <h2>{content[langKey].aboutTitle}</h2>
-            <p>
-              {content[langKey].about}
-            </p>
-          </article>
+          <section className="content-grid">
+            <article>
+              <h2>{content[langKey].aboutTitle}</h2>
+              <p>{content[langKey].about}</p>
+            </article>
 
-          <article>
-            <h2>{content[langKey].strengthsTitle}</h2>
+            <article>
+              <h2>{content[langKey].strengthsTitle}</h2>
               <ul>
-              {(strengths[langKey] || strengths.en).map((item) => (
-                <li key={item}>{item}</li>
-              ))}
+                {(strengths[langKey] || strengths.en).map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
               </ul>
-          </article>
-        </section>
-      </main>
+            </article>
+          </section>
+        </main>
+      </div>
 
       <style jsx global>{`
         :root {
@@ -251,22 +261,22 @@ const content = {
           backdrop-filter: blur(25px);
         }
 
-        article h2{
-            transition: color .3s ease;
+        article h2 {
+          transition: color .3s ease;
         }
 
-        article:hover h2{
-            color:#7dd3fc;
+        article:hover h2 {
+          color: #7dd3fc;
         }
 
         article p,
-        article li{
-            transition:color .3s ease;
+        article li {
+          transition: color .3s ease;
         }
 
         article:hover p,
-        article:hover li{
-            color:#eef8ff;
+        article:hover li {
+          color: #eef8ff;
         }
 
         h2 {
@@ -325,142 +335,142 @@ const content = {
           }
         }
 
-        .card{
-         position:relative;
+        .card {
+          position: relative;
         }
 
-        .card-header{
-          display:flex;
-          justify-content:space-between;
-          align-items:center;
-          gap:12px;
-          margin-bottom:12px;
-          flex-wrap:nowrap; /* keep eyebrow and button on same line */
+        .card-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 12px;
+          margin-bottom: 12px;
+          flex-wrap: nowrap;
         }
 
-        .language-toggle{
-          display:inline-flex;
-          align-items:center;
-          gap:8px;
-          padding:8px 14px;
-          border-radius:999px;
-          background:rgba(255,255,255,.06);
-          border:1px solid rgba(255,255,255,.12);
-          backdrop-filter:blur(15px);
-          cursor:pointer;
-          transition:.3s;
-          margin-left:auto;
+        .language-toggle {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 8px 14px;
+          border-radius: 999px;
+          background: rgba(255, 255, 255, 0.06);
+          border: 1px solid rgba(255, 255, 255, 0.12);
+          backdrop-filter: blur(15px);
+          cursor: pointer;
+          transition: 0.3s;
+          margin-left: auto;
           flex: 0 0 auto;
         }
 
-        .language-toggle:hover{
-          background:rgba(125,211,252,.12);
-          border-color:#7dd3fc;
+        .language-toggle:hover {
+          background: rgba(125, 211, 252, 0.12);
+          border-color: #7dd3fc;
         }
 
-        .hero{
-          display:flex;
-          gap:12px;
-          align-items:flex-start;
+        .hero {
+          display: flex;
+          gap: 12px;
+          align-items: flex-start;
         }
 
-        .hero-content{
-          flex:1;
-          min-width:0;
+        .hero-content {
+          flex: 1;
+          min-width: 0;
         }
 
-        .photo-rect{
-          width:160px;
-          height:200px;
-          border-radius:12px;
-          overflow:hidden;
-          border:1px solid rgba(255,255,255,.08);
-          background:rgba(255,255,255,.02);
+        .photo-rect {
+          width: 160px;
+          height: 200px;
+          border-radius: 12px;
+          overflow: hidden;
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          background: rgba(255, 255, 255, 0.02);
           flex: 0 0 auto;
         }
 
-        .profile-photo{
-          width:100%;
-          height:100%;
-          object-fit:contain;
-          display:block;
-          background: rgba(6,17,31,0.04);
+        .profile-photo {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          display: block;
+          background: rgba(6, 17, 31, 0.04);
         }
 
-        .desktop-photo{ display:block; }
-        .mobile-photo{ display:none; }
+        .desktop-photo { display: block; }
+        .mobile-photo { display: none; }
 
         @media (max-width: 700px) {
-          .hero{
-            display:flex;
-            flex-direction:column;
-            gap:10px;
-            align-items:stretch;
-            justify-content:space-between;
+          .hero {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: stretch;
+            justify-content: space-between;
           }
 
-          .hero-content{
+          .hero-content {
             flex: 1 1 auto;
             min-height: 0;
-            display:flex;
-            flex-direction:column;
-            justify-content:flex-start;
-            gap:8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            gap: 8px;
           }
 
-          .photo-rect{
-            width:min(100%, 220px);
-            height:auto;
+          .photo-rect {
+            width: min(100%, 220px);
+            height: auto;
             aspect-ratio: 4 / 5;
-            margin:0 auto;
-            align-self:center;
+            margin: 0 auto;
+            align-self: center;
             border: none;
           }
 
-          .desktop-photo{ display:none; }
-          .mobile-photo{ display:block; height:100%; object-fit:cover; }
+          .desktop-photo { display: none; }
+          .mobile-photo { display: block; height: 100%; object-fit: cover; }
 
-          .card-header{
-            flex-wrap:wrap;
-            gap:6px;
-            margin-bottom:8px;
-            align-items:center;
+          .card-header {
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 8px;
+            align-items: center;
           }
 
-          .eyebrow{
-            white-space:normal;
-            overflow:visible;
-            text-overflow:unset;
-            margin:0;
+          .eyebrow {
+            white-space: normal;
+            overflow: visible;
+            text-overflow: unset;
+            margin: 0;
           }
 
-          .language-toggle{
-            margin-left:0;
-            margin-top:0;
+          .language-toggle {
+            margin-left: 0;
+            margin-top: 0;
           }
 
-          .content-grid{
-            gap:10px;
+          .content-grid {
+            gap: 10px;
           }
 
-          .content-grid article{
+          .content-grid article {
             aspect-ratio: auto;
             min-height: auto;
-            padding:12px;
+            padding: 12px;
           }
 
-          .actions{
-            display:flex;
-            justify-content:flex-start;
+          .actions {
+            display: flex;
+            justify-content: flex-start;
           }
 
           .actions a {
-            width:100%;
-            text-align:center;
+            width: 100%;
+            text-align: center;
           }
         }
       `}</style>
-    </div>
+    </>
   );
 }
 
