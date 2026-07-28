@@ -308,8 +308,16 @@ const content = {
         }
 
         @media (max-width: 700px) {
+          .page {
+            padding: 0;
+            place-items: stretch;
+          }
+
           .card {
-            padding: 24px;
+            width: 100%;
+            min-height: 100dvh;
+            padding: 16px 12px 20px;
+            border-radius: 0;
           }
 
           .content-grid {
@@ -386,11 +394,8 @@ const content = {
           .hero{
             display:flex;
             flex-direction:column;
-            gap:8px;
+            gap:10px;
             align-items:stretch;
-            aspect-ratio: 1 / 1;
-            padding:12px;
-            box-sizing:border-box;
             justify-content:space-between;
           }
 
@@ -404,20 +409,19 @@ const content = {
           }
 
           .photo-rect{
-            width:100%;
+            width:min(100%, 220px);
             height:auto;
-            flex: 0 0 38%;
-            margin:0;
+            aspect-ratio: 4 / 5;
+            margin:0 auto;
             align-self:center;
-            border: none; /* remove border on mobile */
+            border: none;
           }
 
           .desktop-photo{ display:none; }
           .mobile-photo{ display:block; height:100%; object-fit:cover; }
 
-          /* keep header inline when possible; allow eyebrow to wrap while keeping toggle right */
           .card-header{
-            flex-wrap:wrap; /* allow eyebrow wrap on small screens */
+            flex-wrap:wrap;
             gap:6px;
             margin-bottom:8px;
             align-items:center;
@@ -436,7 +440,7 @@ const content = {
           }
 
           .content-grid{
-            gap:12px;
+            gap:10px;
           }
 
           .content-grid article{
@@ -447,7 +451,12 @@ const content = {
 
           .actions{
             display:flex;
-            justify-content:center;
+            justify-content:flex-start;
+          }
+
+          .actions a {
+            width:100%;
+            text-align:center;
           }
         }
       `}</style>
