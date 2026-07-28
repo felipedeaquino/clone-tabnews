@@ -1,65 +1,131 @@
-function Home() {
-  const strengths = [
-    "ETL pipelines and data modeling",
-    "Scalable backend APIs",
-    "Data systems for critical environments",
-    "Modernizing legacy platforms",
-  ];
+import { useState, useEffect } from 'react';
 
-  const stack = [
-    "Node.js",
-    "AdonisJS",
-    "NestJS",
-    "PostgreSQL",
-    "Python",
-    "Docker",
-  ];
+function Home() {
+  const strengths = {
+    en: [
+      'ETL pipelines and data modeling',
+      'Scalable backend APIs',
+      'Data systems for critical environments',
+      'Modernizing legacy platforms',
+    ],
+    pt: [
+      'Pipelines ETL e modelagem de dados',
+      'APIs backend escaláveis',
+      'Sistemas de dados para ambientes críticos',
+      'Modernização de plataformas legadas',
+    ],
+  };
+
+const [language, setLanguage] = useState('en-US');
+
+useEffect(() => {
+  if (typeof window === 'undefined') return;
+
+  const saved = localStorage.getItem('language');
+  if (saved) {
+    setLanguage(saved);
+    return;
+  }
+
+  const locale = (navigator && navigator.language) || 'en';
+  const initial = locale.startsWith('pt') ? 'pt-BR' : 'en-US';
+  setLanguage(initial);
+  try {
+    localStorage.setItem('language', initial);
+  } catch (e) {
+    // ignore storage errors
+  }
+}, []);
+
+function toggleLanguage() {
+  const next = language === 'en-US' ? 'pt-BR' : 'en-US';
+  setLanguage(next);
+  try {
+    localStorage.setItem('language', next);
+  } catch (e) {
+    // ignore storage errors
+  }
+}
+
+const content = {
+  en: {
+    title: "Hi, I'm Felipe.",
+    lead: "I design reliable data systems and backend solutions that balance \
+            performance, clarity, and long-term maintainability.",
+    about: "I bring experience building resilient systems for high-volume \
+              environments, with a strong foundation in data engineering, API development, \
+              and system refactoring.",
+    aboutTitle: "About",
+    strengthsTitle: "Core Strengths",
+    button: "Connect on LinkedIn",
+    eyebrow: "Data Engineer • Backend Developer • ML Enthusiast"
+  },
+  pt: {
+    title: "Olá, eu sou Felipe.",
+    lead: "Eu projeto sistemas de dados confiáveis e soluções backend que equilibram \
+            desempenho, clareza e manutenibilidade a longo prazo.",
+    about: "Tenho experiência em construir sistemas resilientes para ambientes de alto volume, \
+            com uma forte fundação em engenharia de dados, desenvolvimento de APIs e refatoração de sistemas.",
+    aboutTitle: "Sobre",
+    strengthsTitle: "Áreas de Atuação",
+    button: "Conecte-se no LinkedIn",
+    eyebrow: "Engenheiro de Dados • Desenvolvedor Backend • Entusiasta de ML"
+  }
+};
+
+  const langKey = language && language.startsWith('pt') ? 'pt' : 'en';
 
   return (
     <div className="page">
       <main className="card">
+        <div className="card-header">
+          <p className="eyebrow">{content[langKey].eyebrow}</p>
+          <button
+            type="button"
+            className="language-toggle"
+            onClick={toggleLanguage}
+            aria-label="Toggle language"
+            title="Toggle language"
+          >
+            {language === 'en-US' ? 'EN' : 'PT'}
+          </button>
+        </div>
         <section className="hero">
-          <p className="eyebrow">Data Engineer • Backend Developer • ML Enthusiast</p>
-          <h1>Hi, I’m Felipe.</h1>
-          <p className="lead">
-            I design reliable data systems and backend solutions that balance
-            performance, clarity, and long-term maintainability.
-          </p>
+          <div className="hero-content">
+            <h1>{content[langKey].title}</h1>
+            <p className="lead">
+              {content[langKey].lead}
+            </p>
 
-          <div className="actions">
-            <a href="https://www.linkedin.com/in/felipe-puziol-de-aquino/" target="_blank" rel="noreferrer">
-              Connect on LinkedIn
-            </a>
+            <div className="actions">
+              <a href="https://www.linkedin.com/in/felipe-puziol-de-aquino/" target="_blank" rel="noreferrer">
+                {content[langKey].button}
+              </a>
+            </div>
+          </div>
+
+          <div className="photo-rect" role="img" aria-label="Photo">
+            <img src="/eu.jpg" alt="Profile" className="profile-photo desktop-photo" />
+            <img src="/eu_h.jpg" alt="Profile" className="profile-photo mobile-photo" />
           </div>
         </section>
 
         <section className="content-grid">
           <article>
-            <h2>About</h2>
+            <h2>{content[langKey].aboutTitle}</h2>
             <p>
-              I bring experience building resilient systems for fintech and high-volume
-              environments, with a strong foundation in data engineering, API development,
-              and system refactoring.
+              {content[langKey].about}
             </p>
           </article>
 
           <article>
-            <h2>Core strengths</h2>
-            <ul>
-              {strengths.map((item) => (
+            <h2>{content[langKey].strengthsTitle}</h2>
+              <ul>
+              {(strengths[langKey] || strengths.en).map((item) => (
                 <li key={item}>{item}</li>
               ))}
-            </ul>
+              </ul>
           </article>
-        </section>
-
-        <section className="stack">
-          <h2>Tech focus</h2>
-          <div className="chips">
-            {stack.map((item) => (
-              <span key={item}>{item}</span>
-            ))}
-          </div>
         </section>
       </main>
 
@@ -87,12 +153,12 @@ function Home() {
         }
 
         .card {
-          width: min(900px, 100%);
+          width: min(940px, 55%);
           background: rgba(255, 255, 255, 0.06);
           border: 1px solid rgba(255, 255, 255, 0.12);
           backdrop-filter: blur(18px);
           border-radius: 24px;
-          padding: 40px;
+          padding: 50px 30px;
           box-shadow: 0 20px 60px rgba(3, 8, 20, 0.35);
         }
 
@@ -115,7 +181,7 @@ function Home() {
           font-size: 1.05rem;
           line-height: 1.7;
           color: #dbe4f0;
-          max-width: 680px;
+          max-width: 520px;
         }
 
         .actions {
@@ -124,18 +190,31 @@ function Home() {
 
         .actions a {
           display: inline-block;
-          padding: 10px 16px;
+          padding: 12px 18px;
           border-radius: 999px;
           background: #7dd3fc;
           color: #06111f;
           text-decoration: none;
           font-weight: 600;
-          transition: transform 0.2s ease, opacity 0.2s ease;
+
+          transition:
+            transform .35s ease,
+            box-shadow .35s ease,
+            background .35s ease;
         }
 
         .actions a:hover {
-          transform: translateY(-1px);
-          opacity: 0.95;
+          transform: translateY(-4px) scale(1.04);
+
+          background: #9be3ff;
+
+          box-shadow:
+            0 10px 30px rgba(125,211,252,.45),
+            0 0 18px rgba(125,211,252,.35);
+        }
+
+        .actions a:active {
+          transform: translateY(-1px) scale(.98);
         }
 
         .content-grid {
@@ -146,10 +225,48 @@ function Home() {
         }
 
         article {
-          background: rgba(255, 255, 255, 0.04);
+          background: rgba(255,255,255,.04);
           border-radius: 18px;
           padding: 20px;
-          border: 1px solid rgba(255, 255, 255, 0.08);
+          border: 1px solid rgba(255,255,255,.08);
+
+          transition:
+            transform .35s ease,
+            border-color .35s ease,
+            background .35s ease,
+            box-shadow .35s ease;
+        }
+
+        article:hover {
+          transform: translateY(-6px);
+
+          background: rgba(125,211,252,.08);
+
+          border-color: rgba(125,211,252,.45);
+
+          box-shadow:
+            0 20px 40px rgba(0,0,0,.18),
+            0 0 18px rgba(125,211,252,.20);
+
+          backdrop-filter: blur(25px);
+        }
+
+        article h2{
+            transition: color .3s ease;
+        }
+
+        article:hover h2{
+            color:#7dd3fc;
+        }
+
+        article p,
+        article li{
+            transition:color .3s ease;
+        }
+
+        article:hover p,
+        article:hover li{
+            color:#eef8ff;
         }
 
         h2 {
@@ -197,6 +314,140 @@ function Home() {
 
           .content-grid {
             grid-template-columns: 1fr;
+          }
+        }
+
+        .card{
+         position:relative;
+        }
+
+        .card-header{
+          display:flex;
+          justify-content:space-between;
+          align-items:center;
+          gap:12px;
+          margin-bottom:12px;
+          flex-wrap:nowrap; /* keep eyebrow and button on same line */
+        }
+
+        .language-toggle{
+          display:inline-flex;
+          align-items:center;
+          gap:8px;
+          padding:8px 14px;
+          border-radius:999px;
+          background:rgba(255,255,255,.06);
+          border:1px solid rgba(255,255,255,.12);
+          backdrop-filter:blur(15px);
+          cursor:pointer;
+          transition:.3s;
+          margin-left:auto;
+          flex: 0 0 auto;
+        }
+
+        .language-toggle:hover{
+          background:rgba(125,211,252,.12);
+          border-color:#7dd3fc;
+        }
+
+        .hero{
+          display:flex;
+          gap:12px;
+          align-items:flex-start;
+        }
+
+        .hero-content{
+          flex:1;
+          min-width:0;
+        }
+
+        .photo-rect{
+          width:160px;
+          height:200px;
+          border-radius:12px;
+          overflow:hidden;
+          border:1px solid rgba(255,255,255,.08);
+          background:rgba(255,255,255,.02);
+          flex: 0 0 auto;
+        }
+
+        .profile-photo{
+          width:100%;
+          height:100%;
+          object-fit:contain;
+          display:block;
+          background: rgba(6,17,31,0.04);
+        }
+
+        .desktop-photo{ display:block; }
+        .mobile-photo{ display:none; }
+
+        @media (max-width: 700px) {
+          .hero{
+            display:flex;
+            flex-direction:column;
+            gap:8px;
+            align-items:stretch;
+            aspect-ratio: 1 / 1;
+            padding:12px;
+            box-sizing:border-box;
+            justify-content:space-between;
+          }
+
+          .hero-content{
+            flex: 1 1 auto;
+            min-height: 0;
+            display:flex;
+            flex-direction:column;
+            justify-content:flex-start;
+            gap:8px;
+          }
+
+          .photo-rect{
+            width:100%;
+            height:auto;
+            flex: 0 0 38%;
+            margin:0;
+            align-self:center;
+            border: none; /* remove border on mobile */
+          }
+
+          .desktop-photo{ display:none; }
+          .mobile-photo{ display:block; height:100%; object-fit:cover; }
+
+          /* keep header inline when possible; allow eyebrow to wrap while keeping toggle right */
+          .card-header{
+            flex-wrap:wrap; /* allow eyebrow wrap on small screens */
+            gap:6px;
+            margin-bottom:8px;
+            align-items:center;
+          }
+
+          .eyebrow{
+            white-space:normal;
+            overflow:visible;
+            text-overflow:unset;
+            margin:0;
+          }
+
+          .language-toggle{
+            margin-left:0;
+            margin-top:0;
+          }
+
+          .content-grid{
+            gap:12px;
+          }
+
+          .content-grid article{
+            aspect-ratio: auto;
+            min-height: auto;
+            padding:12px;
+          }
+
+          .actions{
+            display:flex;
+            justify-content:center;
           }
         }
       `}</style>
